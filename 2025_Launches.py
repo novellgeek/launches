@@ -6,7 +6,7 @@ import csv
 launch_base_url = 'https://lldev.thespacedevs.com/2.3.0/launches/'
 
 # Time frame: now - 31 days ago
-now = datetime.now() + timedelta(days=31)
+now = datetime.now() + timedelta(days=150)
 month_ago = datetime.now()
 
 # Adding the time frame to the filters
@@ -91,10 +91,10 @@ if not results:
 #print(results)
 
 # Create and open a CSV file to write the results
-with open('C:\\Users\\standalone1\\Desktop\\Rocketlaunch\\Output\launches_past_month.csv', mode='w', newline='') as file:
+with open('C:\\Users\\standalone1\\Desktop\\Rocketlaunch\\Output\2025_Launches.csv', mode='w', newline='') as file:
     writer = csv.writer(file)
     # Write the headers
-    headers = ['launch_id', 'date', 'time','Rocket', 'Mission', 'country', 'location', 'status']
+    headers = ['launch_id', 'name', 'net', 'status', 'country', 'location']
     writer.writerow(headers)
     
     # Write the data
@@ -117,13 +117,13 @@ while next_url:
     #print(next_results)
 
     # Adding to the original results dictionary
-    with open('C:\\Users\\standalone1\\Desktop\\Rocketlaunch\\Output\\launches_next_month.csv', mode='a', newline='') as file:
+    with open('C:\\Users\\standalone1\\Desktop\\Rocketlaunch\\Output\\2025_Launches.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
         for launch in next_results['results']:
             try:
                 writer.writerow([launch['id'], launch['net'].split("T")[0], launch['net'].split("T")[1].split("Z")[0],launch['name'].split("|")[0], launch['name'].split("|")[1], launch['pad']['location']['name'],launch['pad']['country']['name'],   launch['status']['name']])
             except Exception as e:
-                writer.writerow([launch['id'], launch['name'].split("|")[0], launch['name'].split("|")[1], launch['net'].split("T")[0], launch['net'].split("T")[1].split("Z")[0], launch['status']['name'], "NOT FOUND", "NOT FOUND"])
+                writer.writerow([launch['id'], launch['name'], launch['net'], launch['status']['name'], "NOT FOUND", "NOT FOUND"])
 
     # Updating the next URL
     next_url = next_results['next']

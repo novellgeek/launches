@@ -91,10 +91,10 @@ if not results:
 #print(results)
 
 # Create and open a CSV file to write the results
-with open('launches_past_month.csv', mode='w', newline='') as file:
+with open('C:\\Users\\standalone1\\Desktop\\Rocketlaunch\\Output\launches_past_month.csv', mode='w', newline='') as file:
     writer = csv.writer(file)
     # Write the headers
-    headers = ['launch_id', 'name1', 'name2', 'date', 'time', 'status', 'country', 'location']
+    headers = ['launch_id', 'date', 'time','Rocket', 'Mission', 'country', 'location', 'status']
     writer.writerow(headers)
     
     # Write the data
