@@ -1,0 +1,55 @@
+import smtplib
+import ssl
+from email.message import EmailMessage
+import getpass
+import os
+import glob
+
+def send_csv_email(sender_email, app_password, receiver_email, subject, body, csv_path):
+    # Create the email
+    msg = EmailMessage()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+    msg.set_content(body)
+
+    # Attach the CSV file
+    with open(csv_path, 'rb') as f:
+        file_data = f.read()
+        filename = os.path.basename(csv_path)
+    msg.add_attachment(file_data, maintype='text', subtype='csv', filename=filename)
+
+    # Send email via Gmail
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(sender_email, app_password)
+        smtp.send_message(msg)
+    print(f"✅ Email sent successfully with attachment: {filename}")
+
+def resolve_csv_path(pattern):
+    matches = glob.glob(pattern)
+    if not matches:
+        raise FileNotFoundError(f"No CSV files found matching pattern: {pattern}")
+    elif len(matches) == 1:
+        print(f"✅ Found one CSV file: {matches[0]}")
+        return matches[0]
+    else:
+        print("🔎 Multiple CSV files found. Choose one:")
+        for i, path in enumerate(matches):
+            print(f" [{i+1}] {path}")
+        choice = int(input("Enter the number of the file you want to send: "))
+        return matches[choice - 1]
+
+if __name__ == "__main__":
+    sender = input("Enter your Gmail address: ")
+    app_pass = getpass.getpass("Enter your Gmail app password: ")
+    receiver = input("Enter recipient email address: ")
+    subject = input("Enter subject for email: ")
+    body = input("Enter email body text: ")
+    pattern = input("Enter path to CSV file (use * wildcard if needed): ")
+
+    try:
+        csv = resolve_csv_path(pattern)
+        send_csv_email(sender, app_pass, receiver, subject, body, csv)
+    except Exception as e:
+        print(f"❌ Error: {e}")
