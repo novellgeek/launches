@@ -1,0 +1,36 @@
+import smtplib
+import ssl
+from email.message import EmailMessage
+import getpass
+import os
+
+def send_csv_email(sender_email, app_password, receiver_email, subject, body, csv_path):
+    # Create the email
+    msg = EmailMessage()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+    msg.set_content(body)
+
+    # Attach the CSV file
+    with open(csv_path, 'rb') as f:
+        file_data = f.read()
+        filename = os.path.basename(csv_path)
+    msg.add_attachment(file_data, maintype='text', subtype='csv', filename=filename)
+
+    # Connect to Gmail and send
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(sender_email, app_password)
+        smtp.send_message(msg)
+    print("Email sent successfully!")
+
+if __name__ == "__main__":
+    sender = input("Enter your Gmail address:pholdstock5@gmail.com ")
+    app_pass = getpass.getpass("Enter your Gmail app password: ")
+    receiver = input("Enter recipient email address:pholdstock@phl.org.nz")
+    subject = input("Enter subject for email: test")
+    body = input("Enter email body text:test ")
+    csv = input("Enter path to CSV file:C:/Users/HP/Scripts/*.csv")
+
+    send_csv_email(sender, app_pass, receiver, subject, body, csv)
