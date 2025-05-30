@@ -2,35 +2,42 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 import os
+import glob
 
 # 🔧 CONFIGURATION — Fill these in once
 SENDER_EMAIL = "you@gmail.com"
 APP_PASSWORD = "your_app_password_here"
 RECEIVER_EMAIL = "recipient@example.com"
-CSV_FILE_PATH = "C:/path/to/your/file.csv"  # No wildcards
-EMAIL_SUBJECT = "Here is the CSV file"
+CSV_GLOB_PATH = "C:/Users/YourName/Scripts/*.csv"  # Wildcard allowed
+EMAIL_SUBJECT = "CSV File Attached"
 EMAIL_BODY = "Please find the attached CSV file."
 
-def send_csv_email():
-    # Create the email
+def send_first_matching_csv():
+    matches = glob.glob(CSV_GLOB_PATH)
+    if not matches:
+        print(f"❌ No CSV files matched pattern: {CSV_GLOB_PATH}")
+        return
+
+    csv_path = matches[0]
+    print(f"📄 Using file: {csv_path}")
+
     msg = EmailMessage()
     msg['From'] = SENDER_EMAIL
     msg['To'] = RECEIVER_EMAIL
     msg['Subject'] = EMAIL_SUBJECT
     msg.set_content(EMAIL_BODY)
 
-    # Attach the CSV file
-    with open(CSV_FILE_PATH, 'rb') as f:
+    with open(csv_path, 'rb') as f:
         file_data = f.read()
-        filename = os.path.basename(CSV_FILE_PATH)
+        filename = os.path.basename(csv_path)
     msg.add_attachment(file_data, maintype='text', subtype='csv', filename=filename)
 
-    # Send via Gmail
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
         smtp.login(SENDER_EMAIL, APP_PASSWORD)
         smtp.send_message(msg)
-    print(f"✅ Email sent to {RECEIVER_EMAIL} with {filename} attached.")
+
+    print(f"✅ Email sent with attachment: {filename}")
 
 if __name__ == "__main__":
-    send_csv_email()
+    send_first_matching_csv()
