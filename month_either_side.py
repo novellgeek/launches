@@ -1,11 +1,11 @@
-from datetime import datetime, timedelta
+afrom datetime import datetime, timedelta
 import requests
 import csv
 import os
 
 # ——— Configuration ———
 API_BASE_URL = 'https://ll.thespacedevs.com/2.3.0/launches/'
-API_KEY      = '44e9bb0de803f1eca3ac4caa3fbde3bc2e31703a'
+API_KEY      = 'insert API Key'
 HEADERS      = {'Authorization': f'Token {API_KEY}'}
 
 # ——— Time window: 31 days ago → 60 days from now ———
@@ -91,3 +91,6 @@ with open(out_file, 'w', encoding='utf-8', newline='') as csvfile:
         url = data.get('next')
 
 print("Done! CSV saved to:", out_file)
+
+
+'44e9bb0de803f1eca3ac4caa3fbde3bc2e31703a'
