@@ -12,7 +12,7 @@ from streamlit_autorefresh import st_autorefresh
 
 # --- CONFIGURATION ---
 API_BASE_URL = 'https://ll.thespacedevs.com/2.3.0/launches/'
-API_KEY      = '44e9bb0de803f1eca3ac4caa3fbde3bc2e31703a'
+API_KEY      = 'add api key'
 HEADERS      = {'Authorization': f'Token {API_KEY}'}
 DATA_PATH    = r'C:\Users\HP\scripts\NZSPOClaunches_next_past_month.csv'
 IMAGE_PATH   = 'rockets.png'  # Update as needed
@@ -453,3 +453,7 @@ with tab4:
         st.info("Rocket dashboard visual not found or failed to load.")
 
 st.caption("Last data update: {}".format(datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')))
+
+
+
+'44e9bb0de803f1eca3ac4caa3fbde3bc2e31703a'
