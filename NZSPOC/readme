@@ -1,0 +1,82 @@
+# 🚀 Rocket Launches Dashboard
+
+A modern, interactive Streamlit web app for visualizing, exploring, and analyzing global rocket launches (2025 and beyond) using the SpaceDevs Launch Library API.  
+Easily view upcoming launches, past launches, and in-depth analytics, with rich visual cards, real-time countdowns, country flags, and direct links to public mission pages.
+
+## Features
+
+- **Live & Local Data:** Downloads launch data from [SpaceDevs Launch Library 2 API](https://thespacedevs.com/llapi) and saves to CSV for offline and historical use.
+- **Tabbed Layout:**  
+  - **Upcoming Launches:** Visual cards with animated countdowns, status, weather probability, and country flag.
+  - **Past Launches:** Filter by rocket or country, see all mission details.
+  - **Analytics:**  
+    - Launches by country, rocket, pad location, and mission (with Starlink launches grouped).
+    - Monthly trend, top 5 rockets, timeline of next launches, first/last launch dates, and more.
+    - Interactive pie charts for success rate by country and rocket.
+    - Tables for provider/failure reasons if available.
+  - **About:** Project info and credits.
+- **Details Button:** Each launch card links directly to its page on [Space Launch Now](https://spacelaunchnow.me), for images and full mission details.
+- **Customizable Data Window:** Select the date range for which to fetch and analyze launches.
+- **Auto-Refresh:** Settable interval (default: every 5 minutes) for live updates to upcoming launches.
+
+## Screenshots
+
+*(Add screenshots of your dashboard here!)*
+
+## Installation
+
+1. **Clone this repo or download the code**
+2. **Install dependencies:**
+
+    ```bash
+    pip install streamlit pandas requests plotly pillow streamlit-autorefresh
+    ```
+
+3. **(Optional) Edit `DATA_PATH` and `IMAGE_PATH`** in the script to set your output directory and dashboard image.
+
+4. **Run the app:**
+
+    ```bash
+    streamlit run your_script.py
+    ```
+
+    *(Replace `your_script.py` with the filename, e.g., `app.py`.)*
+
+## Usage
+
+- **Update Launch Data:**  
+  Use the sidebar to select your desired date range and click "Update Launch Data". This will download and save the latest launch data to CSV.
+- **Browse Launches:**  
+  - "Upcoming Launches" tab shows the next launches as visual cards, with animated countdowns and real-time status.
+  - "Past Launches" tab allows filtering by rocket or country and shows all mission cards.
+- **Analytics:**  
+  Explore launch statistics, mission breakdowns (with Starlink launches grouped), success rates, and more in the Analytics tab.
+- **Direct Details:**  
+  Click the "Details" button on any card to see the public launch page for that mission.
+
+## Customization
+
+- **Mission Grouping:**  
+  Currently, all Starlink launches are grouped in mission breakdowns. You can add other groupings by editing the relevant regex in the code.
+- **Auto-Refresh:**  
+  Adjust the refresh interval in the code (`st_autorefresh(interval=300000, key="refresh")`) to change how often the upcoming launches auto-update.
+- **Analytics:**  
+  Analytics can be expanded or modified—request more features or add custom breakdowns as needed.
+
+## Data Source & Credits
+
+- **API:** [SpaceDevs Launch Library 2 API](https://thespacedevs.com/llapi)
+- **Frontend Launch Info:** [Space Launch Now](https://spacelaunchnow.me)
+- **App:** Built with [Streamlit](https://streamlit.io/), [Plotly](https://plotly.com/python/), [Pandas](https://pandas.pydata.org/), [Requests](https://requests.readthedocs.io/), and [streamlit-autorefresh](https://github.com/marcskovmadsen/streamlit-autorefresh).
+
+## License
+
+*(Add your license or terms here, if required.)*
+
+---
+
+## Support
+
+For questions, feature requests, or to contribute, open an issue or reach out!
+
+---
